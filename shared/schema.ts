@@ -1,18 +1,36 @@
-import { sql } from "drizzle-orm";
-import { pgTable, text, varchar } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-export const users = pgTable("users", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  username: text("username").notNull().unique(),
-  password: text("password").notNull(),
+// === TABLE DEFINITIONS ===
+export const products = pgTable("products", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  description: text("description").notNull(),
+  price: integer("price").notNull(), // stored in cents
+  modelUrl: text("model_url").notNull(), // URL to the .glb or .gltf 3D model file
+  thumbnailUrl: text("thumbnail_url").notNull(), // URL to a preview image
+  category: text("category").notNull(),
+  featured: boolean("featured").default(false).notNull(),
 });
 
-export const insertUserSchema = createInsertSchema(users).pick({
-  username: true,
-  password: true,
-});
+// === BASE SCHEMAS ===
+export const insertProductSchema = createInsertSchema(products).omit({ id: true });
 
-export type InsertUser = z.infer<typeof insertUserSchema>;
-export type User = typeof users.$inferSelect;
+// === EXPLICIT API CONTRACT TYPES ===
+export type Product = typeof products.$inferSelect;
+export type InsertProduct = z.infer<typeof insertProductSchema>;
+
+// Request types
+export type CreateProductRequest = InsertProduct;
+export type UpdateProductRequest = Partial<InsertProduct>;
+
+// Response types
+export type ProductResponse = Product;
+export type ProductsListResponse = Product[];
+
+// Query types
+export interface ProductsQueryParams {
+  category?: string;
+  featured?: string;
+}
