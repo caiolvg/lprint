@@ -20,9 +20,9 @@ export function ProductCard({ product, index }: ProductCardProps) {
     }
   };
 
-  const formattedPrice = new Intl.NumberFormat('en-US', {
+  const formattedPrice = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'BRL',
   }).format(product.price / 100);
 
   return (
@@ -33,7 +33,7 @@ export function ProductCard({ product, index }: ProductCardProps) {
           <div className="relative aspect-[4/3] overflow-hidden bg-secondary/50 p-6 flex items-center justify-center">
             {product.featured && (
               <Badge className="absolute top-4 left-4 z-10 bg-primary text-primary-foreground font-medium px-3 py-1 shadow-md">
-                Featured
+                Destaque
               </Badge>
             )}
             
@@ -43,7 +43,7 @@ export function ProductCard({ product, index }: ProductCardProps) {
             </div>
 
             <img
-              src={product.thumbnailUrl}
+              src={product.imageUrls[0]}
               alt={product.name}
               className="object-contain w-full h-full transform group-hover:scale-110 transition-transform duration-700 ease-out mix-blend-multiply dark:mix-blend-normal"
               loading="lazy"
@@ -66,7 +66,7 @@ export function ProductCard({ product, index }: ProductCardProps) {
                 {formattedPrice}
               </span>
               <span className="text-sm font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform -translate-x-2 group-hover:translate-x-0">
-                View 3D Model &rarr;
+                Ver Detalhes &rarr;
               </span>
             </div>
           </div>

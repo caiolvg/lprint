@@ -8,8 +8,7 @@ export const products = pgTable("products", {
   name: text("name").notNull(),
   description: text("description").notNull(),
   price: integer("price").notNull(), // stored in cents
-  modelUrl: text("model_url").notNull(), // URL to the .glb or .gltf 3D model file
-  thumbnailUrl: text("thumbnail_url").notNull(), // URL to a preview image
+  imageUrls: text("image_urls").array().notNull(), // Array of product images
   category: text("category").notNull(),
   featured: boolean("featured").default(false).notNull(),
 });

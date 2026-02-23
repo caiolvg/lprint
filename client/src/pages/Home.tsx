@@ -6,14 +6,15 @@ import { Button } from "@/components/ui/button";
 import { Loader2, Box } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { Badge } from "@/components/ui/badge";
 
-const CATEGORIES = ["All", "Furniture", "Electronics", "Fashion", "Automotive"];
+const CATEGORIES = ["Todos", "Equipamento", "Móveis", "Vestuário", "Brinquedos"];
 
 export default function Home() {
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState("Todos");
   
   const { data: products, isLoading, error } = useProducts(
-    selectedCategory === "All" ? undefined : selectedCategory
+    selectedCategory === "Todos" ? undefined : selectedCategory
   );
 
   return (
@@ -23,7 +24,6 @@ export default function Home() {
       <main className="flex-grow pt-24 pb-20">
         {/* Hero Section */}
         <section className="relative overflow-hidden py-20 lg:py-32">
-          {/* Abstract background shapes */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl -z-10 pointer-events-none" />
           <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-accent rounded-full blur-3xl -z-10 pointer-events-none opacity-50" />
           
@@ -40,22 +40,22 @@ export default function Home() {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
                   </span>
-                  Interactive 3D Experience
+                  Showcase de Produtos
                 </span>
               </Badge>
               <h1 className="font-display text-5xl md:text-7xl font-bold tracking-tight text-foreground mb-8 leading-[1.1] text-balance">
-                Experience products in <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/60">stunning 3D.</span>
+                Explore nossa coleção em <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/60">detalhes.</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground mb-10 leading-relaxed text-balance">
-                A premium showcase of meticulously crafted 3D models. Rotate, zoom, and explore every detail before making a decision.
+                Um catálogo premium com imagens de alta qualidade. Explore cada detalhe e encontre o que você procura.
               </p>
               
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Button size="lg" className="rounded-full px-8 h-14 text-base shadow-xl shadow-primary/20 hover:shadow-primary/30 transition-all duration-300 hover:-translate-y-1">
-                  Explore Catalog
+                  Explorar Catálogo
                 </Button>
                 <Button size="lg" variant="outline" className="rounded-full px-8 h-14 text-base bg-background/50 backdrop-blur-sm hover:bg-secondary transition-all duration-300">
-                  How it works
+                  Como funciona
                 </Button>
               </div>
             </motion.div>
@@ -66,8 +66,8 @@ export default function Home() {
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
             <div>
-              <h2 className="font-display text-3xl font-bold text-foreground">Featured Collection</h2>
-              <p className="text-muted-foreground mt-2">Discover our highest quality 3D assets.</p>
+              <h2 className="font-display text-3xl font-bold text-foreground">Coleção em Destaque</h2>
+              <p className="text-muted-foreground mt-2">Descubra nossos produtos de alta qualidade.</p>
             </div>
             
             {/* Category Filters */}
@@ -93,24 +93,24 @@ export default function Home() {
           {isLoading ? (
             <div className="py-32 flex flex-col items-center justify-center">
               <Loader2 className="w-10 h-10 text-primary animate-spin mb-4" />
-              <p className="text-muted-foreground font-medium">Loading catalog...</p>
+              <p className="text-muted-foreground font-medium">Carregando catálogo...</p>
             </div>
           ) : error ? (
             <div className="py-32 flex flex-col items-center justify-center text-center bg-destructive/5 rounded-3xl border border-destructive/20">
-              <p className="text-destructive font-semibold text-lg mb-2">Failed to load products</p>
-              <p className="text-muted-foreground">Please try refreshing the page.</p>
+              <p className="text-destructive font-semibold text-lg mb-2">Falha ao carregar produtos</p>
+              <p className="text-muted-foreground">Por favor, tente atualizar a página.</p>
             </div>
           ) : !products?.length ? (
             <div className="py-32 flex flex-col items-center justify-center text-center bg-secondary/30 rounded-3xl border border-border/50">
               <Box className="w-16 h-16 text-muted-foreground/50 mb-4" />
-              <h3 className="font-display text-xl font-semibold text-foreground mb-2">No products found</h3>
-              <p className="text-muted-foreground">There are no products in the "{selectedCategory}" category yet.</p>
+              <h3 className="font-display text-xl font-semibold text-foreground mb-2">Nenhum produto encontrado</h3>
+              <p className="text-muted-foreground">Não há produtos na categoria "{selectedCategory}" ainda.</p>
               <Button 
                 variant="outline" 
                 className="mt-6 rounded-full"
-                onClick={() => setSelectedCategory("All")}
+                onClick={() => setSelectedCategory("Todos")}
               >
-                Clear Filters
+                Limpar Filtros
               </Button>
             </div>
           ) : (
@@ -128,15 +128,6 @@ export default function Home() {
       </main>
 
       <Footer />
-    </div>
-  );
-}
-
-// Inline component for the Badge used in Hero
-function Badge({ children, className }: { children: React.ReactNode; className?: string }) {
-  return (
-    <div className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 ${className}`}>
-      {children}
     </div>
   );
 }

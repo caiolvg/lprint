@@ -55,39 +55,46 @@ async function seedDatabase() {
     if (existing.length === 0) {
       const sampleProducts = [
         {
-          name: "Astronaut Suit",
-          description: "A highly detailed 3D model of an astronaut suit.",
-          price: 14999, // $149.99
-          modelUrl: "https://modelviewer.dev/shared-assets/models/Astronaut.glb", 
-          thumbnailUrl: "https://images.unsplash.com/photo-1614729939124-032f0b56c9ce?auto=format&fit=crop&w=800&q=80",
-          category: "Equipment",
+          name: "Traje de Astronauta",
+          description: "Um traje de astronauta altamente detalhado para exploração espacial.",
+          price: 14999, // R$ 149,99
+          imageUrls: [
+            "https://images.unsplash.com/photo-1614729939124-032f0b56c9ce?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=800&q=80"
+          ],
+          category: "Equipamento",
           featured: true
         },
         {
-          name: "Modern Chair",
-          description: "A sleek, modern chair design with ergonomic features.",
-          price: 12900, // $129.00
-          modelUrl: "https://modelviewer.dev/shared-assets/models/Chair.glb", 
-          thumbnailUrl: "https://images.unsplash.com/photo-1506459225024-1428097a7e18?auto=format&fit=crop&w=800&q=80",
-          category: "Furniture",
+          name: "Cadeira Moderna",
+          description: "Um design de cadeira elegante e moderno com características ergonômicas.",
+          price: 12900, // R$ 129,00
+          imageUrls: [
+            "https://images.unsplash.com/photo-1506459225024-1428097a7e18?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1592078615290-033ee584e267?auto=format&fit=crop&w=800&q=80"
+          ],
+          category: "Móveis",
           featured: true
         },
         {
-          name: "Running Shoe",
-          description: "High-performance running shoe optimized for speed.",
-          price: 8999, // $89.99
-          modelUrl: "https://modelviewer.dev/shared-assets/models/Shoe.glb", 
-          thumbnailUrl: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80",
-          category: "Apparel",
+          name: "Tênis de Corrida",
+          description: "Tênis de corrida de alto desempenho otimizado para velocidade.",
+          price: 8999, // R$ 89,99
+          imageUrls: [
+            "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?auto=format&fit=crop&w=800&q=80"
+          ],
+          category: "Vestuário",
           featured: false
         },
         {
-          name: "Toy Train",
-          description: "A colorful wooden toy train for kids of all ages.",
-          price: 1950, // $19.50
-          modelUrl: "https://modelviewer.dev/shared-assets/models/ToyTrain.glb", 
-          thumbnailUrl: "https://images.unsplash.com/photo-1550580975-f7db8c02f1a8?auto=format&fit=crop&w=800&q=80",
-          category: "Toys",
+          name: "Trem de Brinquedo",
+          description: "Um trem de brinquedo de madeira colorido para crianças de todas as idades.",
+          price: 1950, // R$ 19,50
+          imageUrls: [
+            "https://images.unsplash.com/photo-1550580975-f7db8c02f1a8?auto=format&fit=crop&w=800&q=80"
+          ],
+          category: "Brinquedos",
           featured: false
         }
       ];
@@ -95,9 +102,9 @@ async function seedDatabase() {
       for (const product of sampleProducts) {
         await storage.createProduct(product);
       }
-      console.log("Database seeded with sample products");
+      console.log("Banco de dados semeado com produtos de exemplo");
     }
   } catch (error) {
-    console.error("Error seeding database:", error);
+    console.error("Erro ao semear banco de dados:", error);
   }
 }
