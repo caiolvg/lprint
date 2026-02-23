@@ -8,6 +8,7 @@ import NotFound from "@/pages/not-found";
 // Import Pages
 import Home from "./pages/Home";
 import ProductDetail from "./pages/ProductDetail";
+import { ThemeProvider } from "./components/theme-provider";
 
 function Router() {
   return (
@@ -23,10 +24,12 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Router />
-      </TooltipProvider>
+      <ThemeProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Router />
+        </TooltipProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

@@ -34,30 +34,12 @@ export default function Home() {
               transition={{ duration: 0.7, ease: "easeOut" }}
               className="max-w-3xl mx-auto"
             >
-              <Badge className="mb-6 px-4 py-1.5 rounded-full bg-secondary text-secondary-foreground border-border hover:bg-secondary">
-                <span className="flex items-center gap-2">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-                  </span>
-                  Showcase de Produtos
-                </span>
-              </Badge>
               <h1 className="font-display text-5xl md:text-7xl font-bold tracking-tight text-foreground mb-8 leading-[1.1] text-balance">
                 Explore nossa coleção em <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/60">detalhes.</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground mb-10 leading-relaxed text-balance">
-                Um catálogo premium com imagens de alta qualidade. Explore cada detalhe e encontre o que você procura.
+                Um catálogo premium com imagens de alta qualidade.
               </p>
-              
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Button size="lg" className="rounded-full px-8 h-14 text-base shadow-xl shadow-primary/20 hover:shadow-primary/30 transition-all duration-300 hover:-translate-y-1">
-                  Explorar Catálogo
-                </Button>
-                <Button size="lg" variant="outline" className="rounded-full px-8 h-14 text-base bg-background/50 backdrop-blur-sm hover:bg-secondary transition-all duration-300">
-                  Como funciona
-                </Button>
-              </div>
             </motion.div>
           </div>
         </section>
@@ -65,28 +47,39 @@ export default function Home() {
         {/* Catalog Section */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
-            <div>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
               <h2 className="font-display text-3xl font-bold text-foreground">Coleção em Destaque</h2>
               <p className="text-muted-foreground mt-2">Descubra nossos produtos de alta qualidade.</p>
-            </div>
+            </motion.div>
             
             {/* Category Filters */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 hide-scrollbar mask-edges">
+            <motion.div 
+              className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 hide-scrollbar mask-edges"
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
               {CATEGORIES.map((category) => (
                 <Button
                   key={category}
                   variant={selectedCategory === category ? "default" : "outline"}
                   onClick={() => setSelectedCategory(category)}
-                  className={`rounded-full px-6 whitespace-nowrap transition-all duration-300 ${
+                  className={`rounded-full px-6 whitespace-nowrap transition-all duration-300 hover:scale-105 active:scale-95 ${
                     selectedCategory === category 
-                      ? "shadow-md" 
+                      ? "shadow-md shadow-primary/20" 
                       : "bg-background/50 hover:bg-secondary"
                   }`}
                 >
                   {category}
                 </Button>
               ))}
-            </div>
+            </motion.div>
           </div>
 
           {/* Grid or Loading/Error States */}

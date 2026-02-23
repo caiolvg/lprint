@@ -26,11 +26,19 @@ export function ProductCard({ product, index }: ProductCardProps) {
   }).format(product.price / 100);
 
   return (
-    <motion.div variants={item} initial="hidden" animate="show" layout>
+    <motion.div 
+      variants={item} 
+      initial="hidden" 
+      whileInView="show"
+      viewport={{ once: true, margin: "-50px" }}
+      layout
+      whileHover={{ y: -8 }}
+      transition={{ duration: 0.3 }}
+    >
       <Link href={`/product/${product.id}`}>
-        <div className="group relative bg-card rounded-3xl overflow-hidden border border-border/50 shadow-sm hover:shadow-xl transition-all duration-500 cursor-pointer h-full flex flex-col">
+        <div className="group relative bg-card rounded-3xl overflow-hidden border border-border/50 shadow-sm hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 cursor-pointer h-full flex flex-col">
           {/* Image Container */}
-          <div className="relative aspect-[4/3] overflow-hidden bg-secondary/50 p-6 flex items-center justify-center">
+          <div className="relative aspect-[4/3] overflow-hidden bg-secondary/30 p-6 flex items-center justify-center">
             {product.featured && (
               <Badge className="absolute top-4 left-4 z-10 bg-primary text-primary-foreground font-medium px-3 py-1 shadow-md">
                 Destaque
