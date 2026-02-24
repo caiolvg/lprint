@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { insertProductSchema, products } from './schema';
+import { insertProductSchema, products, type Product } from './schema';
 
 // ============================================
 // SHARED ERROR SCHEMAS
@@ -30,14 +30,14 @@ export const api = {
         featured: z.string().optional()
       }).optional(),
       responses: {
-        200: z.array(z.custom<typeof products.$inferSelect>()),
+        200: z.array(z.custom<Product>()),
       },
     },
     get: {
       method: 'GET' as const,
       path: '/api/products/:id' as const,
       responses: {
-        200: z.custom<typeof products.$inferSelect>(),
+        200: z.custom<Product>(),
         404: errorSchemas.notFound,
       },
     }

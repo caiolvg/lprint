@@ -14,7 +14,7 @@ export function Navbar() {
               <Box className="w-6 h-6" />
             </div>
             <span className="font-display font-bold text-xl tracking-tight">
-              Aura<span className="text-muted-foreground font-normal">3D</span>
+              Leopardo<span className="text-muted-foreground font-normal"> Print</span>
             </span>
           </Link>
 

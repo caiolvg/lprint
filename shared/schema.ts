@@ -1,24 +1,24 @@
-import { pgTable, text, serial, integer, boolean } from "drizzle-orm/pg-core";
+import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
 // === TABLE DEFINITIONS ===
-export const products = pgTable("products", {
-  id: serial("id").primaryKey(),
+export const products = sqliteTable("products", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   name: text("name").notNull(),
   description: text("description").notNull(),
   price: integer("price").notNull(), // stored in cents
-  imageUrls: text("image_urls").array().notNull(), // Array of product images
+  imageUrls: text("image_urls").notNull(), // Stored as JSON string
   category: text("category").notNull(),
-  featured: boolean("featured").default(false).notNull(),
+  featured: integer("featured", { mode: "boolean" }).default(false).notNull(),
 });
 
 // === BASE SCHEMAS ===
 export const insertProductSchema = createInsertSchema(products).omit({ id: true });
 
 // === EXPLICIT API CONTRACT TYPES ===
-export type Product = typeof products.$inferSelect;
-export type InsertProduct = z.infer<typeof insertProductSchema>;
+export type Product = Omit<typeof products.$inferSelect, "imageUrls"> & { imageUrls: string[] };
+export type InsertProduct = Omit<z.infer<typeof insertProductSchema>, "imageUrls"> & { imageUrls: string[] };
 
 // Request types
 export type CreateProductRequest = InsertProduct;
