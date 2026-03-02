@@ -9,11 +9,11 @@
       }
     },
     {
-      "src": "server/index.ts",
+      "src": "dist/index.cjs",
       "use": "@vercel/node"
     }
   ],
   "routes": [
-    { "src": "^/(.*)", "dest": "/server/index.ts" }
+    { "src": "^/(.*)", "dest": "/dist/index.cjs" }
   ]
 }
