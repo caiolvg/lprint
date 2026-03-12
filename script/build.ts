@@ -55,9 +55,20 @@ async function buildAll() {
     define: {
       "process.env.NODE_ENV": '"production"',
     },
-    minify: true,
+    // disable minification for easier debugging; variable names (like
+    // `app`) are preserved which helps ensure exports remain accessible
+    // and we can inspect the bundle if needed.
+    minify: false,
     external: externals,
     logLevel: "info",
+    // We export the app from `server/index.ts` itself. It includes a
+    // conditional assignment to `module.exports` and uses `globalThis.__APP`
+    // so that the value is reachable even after bundling. Adding an esbuild
+    // footer here previously put `module.exports = app` outside the module
+    // scope which caused a ReferenceError (app was defined inside a wrapper).
+    // Keeping the footer would override the real export. Remove it and allow
+    // the source to control the export.
+    // footer: { js: "module.exports = app;" },
   });
 }
 

@@ -4,6 +4,14 @@ import { serveStatic } from "./static";
 import { createServer } from "http";
 
 const app = express();
+
+// expose on global so bundler minification/renaming won't break exports
+// (esbuild can rename local variables, so referencing `app` later in a
+// footer or outside the module scope may fail). Using globalThis ensures a
+// stable reference.
+
+// globalThis is safe in Node 14+ and in browsers
+(globalThis as any).__APP = app;
 const httpServer = createServer(app);
 
 declare module "http" {
@@ -99,3 +107,20 @@ initialize().then((server) => {
 });
 
 export default app;
+
+// When bundling for deployment (esbuild) we want to make sure the
+// Express application is assigned to CommonJS exports so that Vercel's
+// Node builder can detect it. The bundler's tree-shaking/minifier may
+// otherwise drop the default export if it's unused, which results in the
+// serverless function not exporting anything and all requests returning
+// 404. This assignment is a side-effect and prevents removal.
+//
+// Using a conditional check avoids problems when running in an ESM
+// environment locally.
+
+declare var module: any;
+if (typeof module !== "undefined" && module.exports) {
+  // use the global reference rather than a local binding name that might be
+  // altered by minification.
+  module.exports = (globalThis as any).__APP;
+}

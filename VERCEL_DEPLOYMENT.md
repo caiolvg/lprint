@@ -36,11 +36,11 @@ Na tela de configuração do projeto:
 1. Expanda **"Environment Variables"**
 2. Adicione as seguintes variáveis:
 
-| Nome | Valor |
-|------|-------|
-| `DATABASE_URL` | `libsql://leopardoprint-cietz.aws-us-east-2.turso.io` |
-| `DATABASE_AUTH_TOKEN` | (seu token Turso) |
-| `NODE_ENV` | `production` |
+| Nome                  | Valor                                                 |
+| --------------------- | ----------------------------------------------------- |
+| `DATABASE_URL`        | `libsql://leopardoprint-cietz.aws-us-east-2.turso.io` |
+| `DATABASE_AUTH_TOKEN` | (seu token Turso)                                     |
+| `NODE_ENV`            | `production`                                          |
 
 **⚠️ IMPORTANTE:** Nunca exponha seu `DATABASE_AUTH_TOKEN` publicamente!
 
@@ -52,7 +52,7 @@ Na seção "Build and Output Settings":
 - **Build Command:** `npm run build`
 - **Output Directory:** `dist`
 
-*Nota: Vercel detectará automaticamente, mas confirme essas configurações.*
+_Nota: Vercel detectará automaticamente, mas confirme essas configurações._
 
 ### 5. Deploy
 
