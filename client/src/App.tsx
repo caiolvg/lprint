@@ -8,6 +8,7 @@ import NotFound from "@/pages/not-found";
 // Import Pages
 import Home from "./pages/Home";
 import ProductDetail from "./pages/ProductDetail";
+import Admin from "./pages/Admin";
 import { ThemeProvider } from "./components/theme-provider";
 
 function Router() {
@@ -15,6 +16,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/product/:id" component={ProductDetail} />
+      <Route path="/admin" component={Admin} />
       {/* Fallback to 404 */}
       <Route component={NotFound} />
     </Switch>
