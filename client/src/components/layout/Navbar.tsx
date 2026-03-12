@@ -1,5 +1,5 @@
-import { Link, useLocation } from "wouter";
-import { Box, Menu, ShieldCheck } from "lucide-react";
+import { Link } from "wouter";
+import { Box, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "../theme-provider";
 
@@ -22,16 +22,6 @@ export function Navbar() {
           {/* Actions */}
           <div className="flex items-center gap-2">
             <ThemeToggle />
-            <Link href="/admin">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="rounded-full"
-                title="Admin"
-              >
-                <ShieldCheck className="w-5 h-5" />
-              </Button>
-            </Link>
             <Button className="hidden sm:flex rounded-full px-6 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95">
               Contato
             </Button>
