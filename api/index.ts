@@ -26,6 +26,53 @@ export default async function handler(req: any, res: any) {
     const id = idMatch ? parseInt(idMatch[1]) : null;
     const method = req.method?.toUpperCase() ?? "GET";
 
+    // GET /api/seed
+    if (url.pathname === "/api/seed" && method === "GET") {
+      await client.execute("DELETE FROM products");
+      const sampleProducts = [
+        {
+          name: "Traje de Astronauta",
+          description: "Um traje de astronauta altamente detalhado para exploração espacial, disponível em incrível visualização 3D.",
+          price: 14999,
+          imageUrls: ["https://modelviewer.dev/shared-assets/models/Astronaut.glb"],
+          category: "Equipamento",
+          featured: true,
+        },
+        {
+          name: "Cadeira Moderna",
+          description: "Um design de cadeira elegante e moderno com características ergonômicas. Interaja com o modelo 3D abaixo.",
+          price: 12900,
+          imageUrls: ["https://modelviewer.dev/assets/ShopifyModels/Chair.glb"],
+          category: "Móveis",
+          featured: true,
+        },
+        {
+          name: "Batedeira Mix Master",
+          description: "Batedeira super potente. Verifique todos os ângulos no nosso visualizador 3D interativo.",
+          price: 8999,
+          imageUrls: ["https://modelviewer.dev/assets/ShopifyModels/Mixer.glb"],
+          category: "Equipamento",
+          featured: false,
+        },
+        {
+          name: "Trem de Brinquedo 3D",
+          description: "Um trem de brinquedo clássico e detalhado. Perfeito para a coleção.",
+          price: 1950,
+          imageUrls: ["https://modelviewer.dev/assets/ShopifyModels/ToyTrain.glb"],
+          category: "Brinquedos",
+          featured: false,
+        },
+      ];
+      for (const p of sampleProducts) {
+        await client.execute({
+          sql: "INSERT INTO products (name, description, price, image_urls, category, featured) VALUES (?, ?, ?, ?, ?, ?)",
+          args: [p.name, p.description, p.price, JSON.stringify(p.imageUrls), p.category, p.featured ? 1 : 0]
+        });
+      }
+      res.status(200).json({ message: "Seed successful! Banco de dados recriado." });
+      return;
+    }
+
     // GET /api/products/:id
     if (id && method === "GET") {
       const result = await client.execute({
