@@ -1,3 +1,4 @@
+import "@google/model-viewer";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { type Product } from "@shared/schema";
@@ -25,6 +26,8 @@ export function ProductCard({ product, index }: ProductCardProps) {
     currency: 'BRL',
   }).format(product.price / 100);
 
+  const isModel = product.imageUrls[0]?.endsWith('.glb') || product.imageUrls[0]?.endsWith('.gltf');
+
   return (
     <motion.div 
       variants={item} 
@@ -50,12 +53,26 @@ export function ProductCard({ product, index }: ProductCardProps) {
               <ArrowUpRight className="w-5 h-5 text-foreground" />
             </div>
 
-            <img
-              src={product.imageUrls[0]}
-              alt={product.name}
-              className="object-contain w-full h-full transform group-hover:scale-110 transition-transform duration-700 ease-out mix-blend-multiply dark:mix-blend-normal"
-              loading="lazy"
-            />
+            {isModel ? (
+              // @ts-ignore
+              <model-viewer
+                src={product.imageUrls[0]}
+                alt={product.name}
+                auto-rotate
+                camera-controls
+                shadow-intensity="1"
+                class="w-full h-full transform group-hover:scale-110 transition-transform duration-700 ease-out"
+                style={{ width: "100%", height: "100%" }}
+              // @ts-ignore
+              ></model-viewer>
+            ) : (
+              <img
+                src={product.imageUrls[0]}
+                alt={product.name}
+                className="object-contain w-full h-full transform group-hover:scale-110 transition-transform duration-700 ease-out mix-blend-multiply dark:mix-blend-normal"
+                loading="lazy"
+              />
+            )}
           </div>
 
           {/* Content */}

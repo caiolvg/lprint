@@ -116,11 +116,10 @@ async function seedDatabase() {
         {
           name: "Traje de Astronauta",
           description:
-            "Um traje de astronauta altamente detalhado para exploração espacial.",
+            "Um traje de astronauta altamente detalhado para exploração espacial, disponível em incrível visualização 3D.",
           price: 14999, // R$ 149,99
           imageUrls: [
-            "https://images.unsplash.com/photo-1614729939124-032f0b56c9ce?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=800&q=80",
+            "https://modelviewer.dev/shared-assets/models/Astronaut.glb",
           ],
           category: "Equipamento",
           featured: true,
@@ -128,34 +127,32 @@ async function seedDatabase() {
         {
           name: "Cadeira Moderna",
           description:
-            "Um design de cadeira elegante e moderno com características ergonômicas.",
+            "Um design de cadeira elegante e moderno com características ergonômicas. Interaja com o modelo 3D abaixo.",
           price: 12900, // R$ 129,00
           imageUrls: [
-            "https://images.unsplash.com/photo-1506459225024-1428097a7e18?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1592078615290-033ee584e267?auto=format&fit=crop&w=800&q=80",
+            "https://modelviewer.dev/assets/ShopifyModels/Chair.glb",
           ],
           category: "Móveis",
           featured: true,
         },
         {
-          name: "Tênis de Corrida",
+          name: "Batedeira Mix Master",
           description:
-            "Tênis de corrida de alto desempenho otimizado para velocidade.",
+            "Batedeira super potente. Verifique todos os ângulos no nosso visualizador 3D interativo.",
           price: 8999, // R$ 89,99
           imageUrls: [
-            "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?auto=format&fit=crop&w=800&q=80",
+            "https://modelviewer.dev/assets/ShopifyModels/Mixer.glb",
           ],
-          category: "Vestuário",
+          category: "Equipamento",
           featured: false,
         },
         {
-          name: "Trem de Brinquedo",
+          name: "Trem de Brinquedo 3D",
           description:
-            "Um trem de brinquedo de madeira colorido para crianças de todas as idades.",
+            "Um trem de brinquedo clássico e detalhado. Perfeito para a coleção.",
           price: 1950, // R$ 19,50
           imageUrls: [
-            "https://images.unsplash.com/photo-1550580975-f7db8c02f1a8?auto=format&fit=crop&w=800&q=80",
+            "https://modelviewer.dev/assets/ShopifyModels/ToyTrain.glb",
           ],
           category: "Brinquedos",
           featured: false,

@@ -1,6 +1,7 @@
+import "@google/model-viewer";
 import { useParams, Link } from "wouter";
 import { motion } from "framer-motion";
-import { ChevronLeft, Share2, Heart, Info, Package, ShieldCheck } from "lucide-react";
+import { ChevronLeft, Share2, Heart, Info, Package, ShieldCheck, Minus, Plus, Box } from "lucide-react";
 import { useProduct } from "@/hooks/use-products";
 import { Button } from "@/components/ui/button";
 import { Navbar } from "@/components/layout/Navbar";
@@ -14,6 +15,7 @@ export default function ProductDetail() {
   
   const { data: product, isLoading, error } = useProduct(id);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [quantity, setQuantity] = useState(1);
 
   if (isLoading) {
     return (
@@ -82,16 +84,29 @@ export default function ProductDetail() {
             {/* Left Column: Image Gallery */}
             <div className="lg:col-span-7 xl:col-span-8 flex flex-col gap-6">
               <motion.div 
-                className="aspect-square lg:aspect-auto lg:h-[60vh] rounded-[2.5rem] overflow-hidden shadow-2xl shadow-primary/5 border border-border/50 bg-secondary/20 relative"
+                className="aspect-square lg:aspect-auto lg:h-[60vh] rounded-[2.5rem] overflow-hidden shadow-2xl shadow-primary/5 border border-border/50 bg-secondary/20 relative flex items-center justify-center p-8"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
               >
-                <img 
-                  src={product.imageUrls[activeImageIndex]} 
-                  alt={product.name}
-                  className="w-full h-full object-contain p-8"
-                />
+                {(product.imageUrls[activeImageIndex].endsWith('.glb') || product.imageUrls[activeImageIndex].endsWith('.gltf')) ? (
+                  // @ts-ignore
+                  <model-viewer
+                    src={product.imageUrls[activeImageIndex]}
+                    alt={product.name}
+                    auto-rotate
+                    camera-controls
+                    shadow-intensity="1"
+                    style={{ width: "100%", height: "100%" }}
+                  // @ts-ignore
+                  ></model-viewer>
+                ) : (
+                  <img 
+                    src={product.imageUrls[activeImageIndex]} 
+                    alt={product.name}
+                    className="w-full h-full object-contain"
+                  />
+                )}
               </motion.div>
 
               {product.imageUrls.length > 1 && (
@@ -104,7 +119,13 @@ export default function ProductDetail() {
                         activeImageIndex === index ? 'border-primary shadow-md' : 'border-transparent opacity-60 hover:opacity-100'
                       }`}
                     >
-                      <img src={url} alt={`${product.name} view ${index + 1}`} className="w-full h-full object-cover" />
+                      {(url.endsWith('.glb') || url.endsWith('.gltf')) ? (
+                         <div className="w-full h-full flex items-center justify-center bg-secondary/50">
+                           <Box className="w-8 h-8 text-muted-foreground" />
+                         </div>
+                      ) : (
+                        <img src={url} alt={`${product.name} view ${index + 1}`} className="w-full h-full object-cover" />
+                      )}
                     </button>
                   ))}
                 </div>
@@ -160,12 +181,41 @@ export default function ProductDetail() {
 
               {/* Action Area */}
               <div className="mt-auto pt-6 flex flex-col gap-4">
-                <Button size="lg" className="w-full rounded-full h-14 text-base font-semibold shadow-xl shadow-primary/20 hover:shadow-primary/30 hover:-translate-y-1 transition-all duration-300">
-                  Solicitar Informações
+                <div className="flex items-center gap-4 mb-2">
+                  <span className="font-medium text-foreground">Quantidade:</span>
+                  <div className="flex items-center border border-border rounded-full bg-background overflow-hidden">
+                    <Button 
+                      variant="ghost" 
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      className="rounded-none px-3"
+                    >
+                      <Minus className="w-4 h-4" />
+                    </Button>
+                    <span className="w-12 text-center font-medium">{quantity}</span>
+                    <Button 
+                      variant="ghost" 
+                      onClick={() => setQuantity(quantity + 1)}
+                      className="rounded-none px-3"
+                    >
+                      <Plus className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
+
+                <Button 
+                  size="lg" 
+                  className="w-full rounded-full h-14 text-base font-semibold shadow-xl shadow-primary/20 hover:shadow-primary/30 hover:-translate-y-1 transition-all duration-300 bg-[#25D366] hover:bg-[#128C7E] text-white"
+                  onClick={() => {
+                    const message = `Olá, gostaria de comprar o produto ${product.name}. Quantidade: ${quantity}.`;
+                    const whatsappUrl = `https://wa.me/5511999999999?text=${encodeURIComponent(message)}`;
+                    window.open(whatsappUrl, '_blank');
+                  }}
+                >
+                  Comprar pelo WhatsApp
                 </Button>
                 <p className="text-xs text-center text-muted-foreground flex items-center justify-center gap-1">
                   <Info className="w-3 h-3" />
-                  Este é um catálogo de visualização apenas.
+                  Você será redirecionado em segurança para o WhatsApp.
                 </p>
               </div>
             </motion.div>
